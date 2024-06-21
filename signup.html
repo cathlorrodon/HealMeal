@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealMeal - Sign Up</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="main.html">
+      <img src="healmeallogo.png" width="200" height="60" class="d-inline-block align-top" alt="Healmeal Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+
+  <div class="container mt-4">
+    <form class="form-signup" id="signupForm">
+      <h2 class="text-center mb-4">Sign Up</h2>
+
+      <div class="form-group">
+        <label for="inputName">Full Name</label>
+        <input type="text" id="inputName" class="form-control" placeholder="Enter your full name" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Enter your email address" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required>
+      </div>
+
+      <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Sign Up</button>
+
+      <p class="mt-3 text-center">Already have an account? <a href="signin.html">Sign in</a></p>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Custom JavaScript for form submission and redirect -->
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Perform form validation (you can add more complex validation here)
+      var name = document.getElementById('inputName').value.trim();
+      var email = document.getElementById('inputEmail').value.trim();
+      var password = document.getElementById('inputPassword').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+      }
+
+      // Save user data to localStorage
+      var userData = {
+        name: name,
+        email: email,
+        password: password
+      };
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      // Redirect to profileinfo.html upon successful signup
+      window.location.href = 'signin.html';
+    });
+  </script>
+</body>
+</html>

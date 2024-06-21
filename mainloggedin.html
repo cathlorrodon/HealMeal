@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealMeal</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="mainloggedin.html">
+        <img src="healmeallogo.png" width="200" height="60" class="d-inline-block align-top" alt="Healmeal Logo">
+      </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="mainloggedin.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="mealplan.html">Meal Plan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="profileinfo.html">User Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="main.html" onclick="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Main Content for Logged In Users -->
+<div class="container mt-4">
+  <h2 class="text-center">Welcome to Your Daily Meal Plan</h2>
+  <p class="text-center">Here you can view and manage your meal plans.</p>
+  <!-- Add more content specific to logged-in users -->
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  function logout() {
+    localStorage.removeItem('userEmail');
+    // Redirect to main page after logout
+    window.location.href = 'main.html';
+  }
+</script>
+
+</body>
+</html>

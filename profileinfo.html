@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealMeal - User Information</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="mainloggedin.html">
+    <img src="healmeallogo.png" width="200" height="60" class="d-inline-block align-top" alt="Healmeal Logo">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="mainloggedin.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="mealplan.html">Meal Plan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="profileinfo.html">User Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="main.html" onclick="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title text-center">User Information</h2>
+          <form id="userInfoForm" onsubmit="return determineDiet()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" required disabled>
+            </div>
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" class="form-control" id="age" name="age" required disabled>
+            </div>
+            <div class="form-group">
+              <label for="sex">Sex</label>
+              <select class="form-control" id="sex" name="sex" required disabled>
+                <option value="">Select</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="height">Height (cm)</label>
+              <input type="number" class="form-control" id="height" name="height" required disabled>
+            </div>
+            <div class="form-group">
+              <label for="weight">Weight (kg)</label>
+              <input type="number" class="form-control" id="weight" name="weight" required disabled>
+            </div>
+            <div class="form-group">
+              <label for="illness">Illness (optional)</label>
+              <input type="text" class="form-control" id="illness" name="illness" disabled>
+            </div>
+            <div class="form-group">
+              <label for="goal">Goal</label>
+              <select class="form-control" id="goal" name="goal" required disabled>
+                <option value="">Select</option>
+                <option value="lose">Lose Weight</option>
+                <option value="gain">Gain Weight</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" onclick="editUserInfo()">Edit Profile</button>
+            <button type="submit" class="btn btn-secondary btn-block mt-2" style="display: none;">Update</button>
+          </form>
+          <div id="result" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    // Check if user data exists in localStorage
+    if (localStorage.getItem('userData')) {
+      // Populate form fields with saved data
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      document.getElementById('name').value = userData.name;
+      document.getElementById('age').value = userData.age;
+      document.getElementById('sex').value = userData.sex;
+      document.getElementById('height').value = userData.height;
+      document.getElementById('weight').value = userData.weight;
+      document.getElementById('illness').value = userData.illness;
+      document.getElementById('goal').value = userData.goal;
+    }
+  });
+
+  function determineDiet() {
+    var name = document.getElementById('name').value.trim();
+    var age = document.getElementById('age').value.trim();
+    var sex = document.getElementById('sex').value;
+    var height = document.getElementById('height').value.trim();
+    var weight = document.getElementById('weight').value.trim();
+    var illness = document.getElementById('illness').value.trim();
+    var goal = document.getElementById('goal').value;
+
+    var diet = '';
+
+    // Simple logic to determine diet
+    if (goal === 'lose') {
+      diet = 'Keto';
+    } else if (goal === 'gain') {
+      if (illness.toLowerCase().includes('celiac') || illness.toLowerCase().includes('gluten')) {
+        diet = 'Gluten-Free';
+      } else {
+        diet = 'Vegetarian';
+      }
+    }
+
+    // Save data to localStorage
+    const userData = {
+      name: name,
+      age: age,
+      sex: sex,
+      height: height,
+      weight: weight,
+      illness: illness,
+      goal: goal,
+      diet: diet
+    };
+    localStorage.setItem('userData', JSON.stringify(userData));
+
+    // Display result
+    var resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `<h4>Hi ${name}, based on your information, we recommend a ${diet} diet for you.</h4>`;
+
+    return false; // Prevent form submission
+  }
+
+  function editUserInfo() {
+    // Enable all form fields for editing
+    document.getElementById('name').disabled = false;
+    document.getElementById('age').disabled = false;
+    document.getElementById('sex').disabled = false;
+    document.getElementById('height').disabled = false;
+    document.getElementById('weight').disabled = false;
+    document.getElementById('illness').disabled = false;
+    document.getElementById('goal').disabled = false;
+
+    // Display the Update button and hide the Edit Profile button
+    document.querySelector('button[type="submit"]').style.display = 'block';
+    document.querySelector('button[type="button"]').style.display = 'none';
+
+    // Focus on the first editable field
+    document.getElementById('name').focus();
+  }
+</script>
+
+</body>
+</html>
