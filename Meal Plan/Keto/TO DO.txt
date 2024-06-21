@@ -1,0 +1,6 @@
+Sa mealplan.html, tingnan niyo format doon ng mga meal. Then gawa kayo kahit mga 21 na recipes.
+Keto - Angel
+Vegetarian - Razell
+Gluten-free - Danica
+
+Edit niyo na then lagay niyo sa folder na 'Meal Plan' then under ng kung anong assigned
